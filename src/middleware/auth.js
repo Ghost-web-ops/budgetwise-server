@@ -1,25 +1,34 @@
-
 import jwt from 'jsonwebtoken';
-export default function auth(req, res, next) {
-     const authHeader = req.headers['authorization'];
 
-    // 2. تحقق من وجود الهيدر وأنه يبدأ بـ "Bearer "
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ error: 'Authorization token is missing or malformed' });
-    }
+const authMiddleware = (req, res, next) => {
+  // 1. احصل على التوكن من الهيدر
+  const authHeader = req.header('Authorization');
 
-    // 3. افصل كلمة "Bearer " واحصل على الـ token فقط
-    const token = authHeader.split(' ')[1];
+  // 2. تحقق مما إذا كان الهيدر موجودًا
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Access denied. No token provided.' });
+  }
 
-    if (!token) {
-        return res.status(401).json({ error: 'No token provided' });
-    }
+  // 3. تحقق من أن التنسيق صحيح ("Bearer token")
+  const tokenParts = authHeader.split(' ');
+  if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+    return res.status(401).json({ error: 'Invalid token format.' });
+  }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(403).json({ error: 'Failed to authenticate token' });
-        }
-         req.user = { id: decoded.userId }; 
-        next();
-    });
-}
+  const token = tokenParts[1];
+
+  try {
+    // 4. تحقق من صحة التوكن باستخدام المفتاح السري
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // 5. أضف بيانات المستخدم إلى كائن الطلب (req)
+    req.user = decoded;
+    
+    // 6. اسمح للطلب بالمرور إلى وجهته التالية
+    next();
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid token.' });
+  }
+};
+
+export default authMiddleware;
