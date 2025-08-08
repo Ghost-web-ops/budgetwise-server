@@ -23,7 +23,7 @@ router.post('/expenses', auth, async (req, res) => {
     try {
         const result = await pool.query(
             'INSERT INTO expenses (user_id, amount, description, category) VALUES ($1, $2, $3, $4) RETURNING *',
-            [req.user.id, amount, description, category]
+            [req.user.userId, amount, description, category]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {

@@ -20,7 +20,7 @@ const authMiddleware = (req, res, next) => {
   try {
     // 4. تحقق من صحة التوكن باستخدام المفتاح السري
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    console.log('Decoded token:', decoded);
     // 5. أضف بيانات المستخدم إلى كائن الطلب (req)
     req.user = decoded;
     
