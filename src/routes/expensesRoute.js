@@ -37,7 +37,7 @@ router.delete('/expenses/:id', auth, async (req, res) => {
     try {
         const result = await pool.query(
             'DELETE FROM expenses WHERE id = $1 AND user_id = $2 RETURNING *',
-            [id, req.user.id]
+            [id, req.user.userId]
         );
 
         if (result.rows.length === 0) {
@@ -78,7 +78,7 @@ router.patch('/expenses/:id', auth, async (req, res) => {
         }
 
         // إضافة الشروط النهائية للأمان
-        values.push(id, req.user.id);
+        values.push(id, req.user.userId);
 
         const updateQuery = `UPDATE expenses SET ${fields.join(', ')} WHERE id = $${queryIndex++} AND user_id = $${queryIndex++} RETURNING *`;
         // --- الجزء السحري ينتهي هنا ---
