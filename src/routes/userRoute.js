@@ -99,7 +99,7 @@ router.get(
     );
     // إعادة توجيه المستخدم إلى الواجهة الأمامية مع إرسال التوكن
    // This is the line inside your /api/auth/google/callback route
-res.redirect(`${process.env.NEXT_PUBLIC_API_URL} || https://budgetwise-client-five.vercel.app/google-callback?token=${token}`);
+res.redirect(` https://budgetwise-client-five.vercel.app/google-callback?token=${token}`);
   }
 );
 
