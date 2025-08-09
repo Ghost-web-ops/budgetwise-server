@@ -12,7 +12,7 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api', userRoutes); 
+app.use('/api/auth', userRoutes); 
 app.use('/api', expensesRoutes);
 
 
