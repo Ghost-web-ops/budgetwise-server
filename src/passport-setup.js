@@ -7,6 +7,16 @@ console.log("--- DEBUG ---");
 console.log("Callback URL being sent to Google:", callbackURLForDebugging);
 console.log("---------------");
 
+const clientID = process.env.GOOGLE_CLIENT_ID;
+const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const callbackURL = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google/callback`; // تأكد أن API_URL هو رابط الباك إند
+
+console.log("--- DEBUGGING GOOGLE STRATEGY ---");
+console.log("CLIENT_ID being used:", clientID ? `Exists (starts with: ${clientID.substring(0, 8)}...)` : "!!! NOT FOUND !!!");
+console.log("CLIENT_SECRET being used:", clientSecret ? "Exists" : "!!! NOT FOUND !!!");
+console.log("CALLBACK_URL being used:", callbackURL);
+console.log("---------------------------------");
+// -------------------------
 passport.use(
   new GoogleStrategy(
     {
