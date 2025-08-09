@@ -77,12 +77,12 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-router.get('/auth/google', passport.authenticate('google'));
+router.get('/google', passport.authenticate('google'));
 
 // --- المسار الثاني: الرابط الذي يعود إليه جوجل ---
 // هذا المسار يستقبل بيانات المستخدم من جوجل
 router.get(
-  '/auth/google/callback',
+  '/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: '/login' }),
   (req, res) => {
     // إذا نجحت المصادقة، سيكون req.user متاحًا
