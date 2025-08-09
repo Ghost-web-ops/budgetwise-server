@@ -88,9 +88,9 @@ router.get(
     // إذا نجحت المصادقة، سيكون req.user متاحًا
     // الآن ننشئ JWT تمامًا كما في تسجيل الدخول العادي
     const payload = {
-      id: req.user.id,
-      username: req.user.username,
-    };
+    userId: req.user.id,
+    email: req.user.email
+  };
 
     const token = jwt.sign(
       payload,
