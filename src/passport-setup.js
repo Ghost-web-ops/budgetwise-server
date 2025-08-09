@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import pool from './db.js';
+import 'dotenv/config';
 
 const callbackURLForDebugging = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google/callback`;
 console.log("--- DEBUG ---");
