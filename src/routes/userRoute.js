@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
-import express from "express";
+import { Router } from 'express';
 import jwt from "jsonwebtoken";
 import passport from 'passport';
 import pool from "../db.js";
-const router = express.Router();
+const router = Router();
 router.use((req, res, next) => {
     console.log(`Request received for: ${req.method} ${req.originalUrl}`);
     next();
