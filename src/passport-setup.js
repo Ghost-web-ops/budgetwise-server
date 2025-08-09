@@ -2,6 +2,11 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import pool from './db.js';
 
+const callbackURLForDebugging = `${process.env.API_URL}/api/auth/google/callback`;
+console.log("--- DEBUG ---");
+console.log("Callback URL being sent to Google:", callbackURLForDebugging);
+console.log("---------------");
+
 passport.use(
   new GoogleStrategy(
     {
