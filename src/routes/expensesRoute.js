@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/expenses', auth, async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM expenses WHERE user_id = $1', [req.user.id]);
+        const result = await pool.query('SELECT * FROM expenses WHERE user_id = $1', [req.user.userId]);
         res.json(result.rows);
     } catch (error) {
         console.error('Error fetching expenses:', error);
